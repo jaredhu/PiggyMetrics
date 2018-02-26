@@ -10,11 +10,7 @@ security:
 spring:
   data:
     mongodb:
-      host: localhost
-      username: cloud
-      password: 123456
-      database: cloud
-      port: 27017
+      url: mongodb://cloud:123456@localhost:27017/cloud
 
 server:
   context-path: /accounts
