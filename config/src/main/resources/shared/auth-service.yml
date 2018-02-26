@@ -1,10 +1,10 @@
 spring:
   data:
     mongodb:
-      host: auth-mongodb
-      username: user
-      password: ${MONGODB_PASSWORD}
-      database: piggymetrics
+      host: 127.0.0.1
+      username: cloud
+      password: 123456
+      database: cloud
       port: 27017
 
 server:
