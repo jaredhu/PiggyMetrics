@@ -1,8 +1,18 @@
 spring:
   data:
     mongodb:
-      url: mongodb://cloud:123456@localhost:27017/cloud
+    #  url: mongodb://cloud:123456@localhost:27017/cloud
+      url: mongodb://localhost:27017/cloud
+      database: cloud
+    #  authenticationDatabase: cloud
+    #   username: cloud
+    #   password: 123456
 
 server:
   context-path: /uaa
   port: 5000
+
+security:
+  oauth2:
+    resource:
+      filter-order: 3

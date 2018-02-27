@@ -32,4 +32,10 @@ public class UserServiceImpl implements UserService {
 
 		log.info("new user has been created: {}", user.getUsername());
 	}
+
+	public static void main(String[] args){
+		String hash = encoder.encode("password");
+		System.out.println(hash);
+
+	}
 }

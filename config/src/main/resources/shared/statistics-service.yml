@@ -2,7 +2,7 @@ security:
   oauth2:
     client:
       clientId: statistics-service
-      clientSecret: ${STATISTICS_SERVICE_PASSWORD:password}
+      clientSecret: statistics
       accessTokenUri: http://localhost:5000/uaa/oauth/token
       grant-type: client_credentials
       scope: server
@@ -10,7 +10,8 @@ security:
 spring:
   data:
     mongodb:
-      url: mongodb://cloud:123456@localhost:27017/cloud
+     # url: mongodb://cloud:123456@localhost:27017/cloud
+      url: mongodb://localhost:27017/cloud
 
 server:
   context-path: /statistics

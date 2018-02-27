@@ -15,18 +15,20 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 @SpringBootApplication
-@EnableResourceServer
 @EnableDiscoveryClient
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthApplication {
@@ -65,6 +67,33 @@ public class AuthApplication {
 		}
 	}
 
+	//private static final String DEMO_RESOURCE_ID = "order";
+
+	@Configuration
+	@EnableResourceServer
+	protected static class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
+
+		@Override
+		public void configure(ResourceServerSecurityConfigurer resources) {
+			//resources.resourceId(DEMO_RESOURCE_ID).stateless(true);
+		}
+
+		@Override
+		public void configure(HttpSecurity http) throws Exception {
+			// @formatter:off
+			http
+					// Since we want the protected resources to be accessible in the UI as well we need
+					// session creation to be allowed (it's disabled by default in 2.0.6)
+					//.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+					//.and()
+					.authorizeRequests().anyRequest().authenticated();
+			// @formatter:on
+		}
+	}
+
+	/**
+	 * EnableAuthorizationServer OAUTH2认证授权中心
+	 */
 	@Configuration
 	@EnableAuthorizationServer
 	protected static class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
@@ -85,6 +114,8 @@ public class AuthApplication {
 		public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
 			// TODO persist clients details
+			System.out.println(env.getProperty("ACCOUNT_SERVICE_PASSWORD"));
+			System.out.println(env.getProperty("ACCOUNT_SERVICE_PASSWORD","password"));
 
 			// @formatter:off
 			clients.inMemory()
@@ -93,18 +124,18 @@ public class AuthApplication {
 					.scopes("ui")
 			.and()
 					.withClient("account-service")
-					.secret(env.getProperty("ACCOUNT_SERVICE_PASSWORD"))
-					.authorizedGrantTypes("client_credentials", "refresh_token")
+					.secret("account")
+					.authorizedGrantTypes("client_credentials", "refresh_token", "password")
 					.scopes("server")
 			.and()
 					.withClient("statistics-service")
-					.secret(env.getProperty("STATISTICS_SERVICE_PASSWORD"))
-					.authorizedGrantTypes("client_credentials", "refresh_token")
+					.secret("statistics")
+					.authorizedGrantTypes("client_credentials", "refresh_token", "password")
 					.scopes("server")
 			.and()
 					.withClient("notification-service")
-					.secret(env.getProperty("NOTIFICATION_SERVICE_PASSWORD"))
-					.authorizedGrantTypes("client_credentials", "refresh_token")
+					.secret("notification")
+					.authorizedGrantTypes("client_credentials", "refresh_token", "password")
 					.scopes("server");
 			// @formatter:on
 		}
