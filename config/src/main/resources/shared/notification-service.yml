@@ -2,7 +2,7 @@ security:
   oauth2:
     client:
       clientId: notification-service
-      clientSecret: notification
+      clientSecret: '{cipher}a31a7bd810600b8fab21b2ab91f3d322f55d888b379d3d4604bee680a2b09b33'
       accessTokenUri: http://localhost:5000/uaa/oauth/token
       grant-type: client_credentials
       scope: server
@@ -27,8 +27,7 @@ backup:
 spring:
   data:
     mongodb:
-     # url: mongodb://cloud:123456@localhost:27017/cloud
-      url: mongodb://localhost:27017/cloud
+      uri: mongodb://cloud:123456@localhost:27017/cloud
 
   mail:
     host: smtp.163.com

@@ -2,7 +2,7 @@ security:
   oauth2:
     client:
       clientId: account-service
-      clientSecret: account
+      clientSecret: '{cipher}06084755bdc4d33deb28c1801efadb333c268a7e39598200f8469d530cad528f'
       accessTokenUri: http://localhost:5000/uaa/oauth/token
       grant-type: client_credentials
       scope: server
@@ -10,12 +10,7 @@ security:
 spring:
   data:
     mongodb:
-    #  url: mongodb://cloud:123456@localhost:27017/cloud
-      url: mongodb://localhost:27017/cloud
-      database: cloud
-    #  authenticationDatabase: cloud
-    #   username: cloud
-    #   password: 123456
+      uri: mongodb://cloud:123456@localhost:27017/cloud
 
 server:
   context-path: /accounts

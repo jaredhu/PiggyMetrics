@@ -10,8 +10,7 @@ security:
 spring:
   data:
     mongodb:
-     # url: mongodb://cloud:123456@localhost:27017/cloud
-      url: mongodb://localhost:27017/cloud
+      uri: mongodb://cloud:123456@localhost:27017/cloud
 
 server:
   context-path: /statistics
