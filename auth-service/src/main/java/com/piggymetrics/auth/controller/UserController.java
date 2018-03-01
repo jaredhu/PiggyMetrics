@@ -1,5 +1,8 @@
 package com.piggymetrics.auth.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.util.JSON;
 import com.piggymetrics.auth.domain.User;
 import com.piggymetrics.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,13 @@ public class UserController {
 
 	@RequestMapping(value = "/current", method = RequestMethod.GET)
 	public Principal getUser(Principal principal) {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			String jsonstr = mapper.writeValueAsString(principal);
+			System.out.println("principal = " +jsonstr);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		return principal;
 	}
 

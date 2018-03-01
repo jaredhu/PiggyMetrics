@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
+/**
+ * @author jared
+ */
 @Document(collection = "users")
 public class User implements UserDetails {
 

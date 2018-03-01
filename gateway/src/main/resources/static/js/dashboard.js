@@ -77,6 +77,8 @@ function getConverted(column) {
 				break;
 			case "USD": column[key].converted = (column[key].amount * global.usd).toFixed(3);
 				break;
+            case "CNY": column[key].converted = column[key].amount;
+                break;
 		}
 		switch (column[key].period) {
 			case "MONTH": break;
@@ -95,6 +97,7 @@ function getConverted(column) {
 				break;
 			case "USD": column[key].converted = (column[key].converted / global.usd).toFixed(3);
 				break;
+            case "CNY": break;
 		}
 		if (column == incomes) {
 			if (firstitem == undefined) {firstitem = key; $("#incomeslider").data("firstitem", key); }
@@ -124,17 +127,26 @@ function initStatisticPage() {
 				if (user.lastCurr == "RUB") { break; }
 				else if (user.lastCurr == "USD") { savings.freeMoney = (savings.freeMoney * global.usd).toFixed(3); }
 				else if (user.lastCurr == "EUR") { savings.freeMoney = (savings.freeMoney * global.eur).toFixed(3); }
+                else if (user.lastCurr == "CNY") { savings.freeMoney = (savings.freeMoney * global.eur).toFixed(3); }
 				break;
 			case "EUR":
 				if (user.lastCurr == "EUR") { break; }
 				else if (user.lastCurr == "USD") { savings.freeMoney = (savings.freeMoney * global.usd / global.eur).toFixed(3); }
 				else if (user.lastCurr == "RUB") { savings.freeMoney = (savings.freeMoney / global.eur).toFixed(3); }
+                else if (user.lastCurr == "CNY") { savings.freeMoney = (savings.freeMoney * global.eur).toFixed(3); }
 				break;
 			case "USD":
 				if (user.lastCurr == "USD") { break; }
 				else if (user.lastCurr == "EUR") { savings.freeMoney = (savings.freeMoney * global.eur / global.usd).toFixed(3); }
 				else if (user.lastCurr == "RUB") { savings.freeMoney = (savings.freeMoney / global.usd).toFixed(3); }
+                else if (user.lastCurr == "CNY") { savings.freeMoney = (savings.freeMoney * global.eur).toFixed(3); }
 				break;
+            case "CNY":
+                if (user.lastCurr == "CNY") { break; }
+                else if (user.lastCurr == "EUR") { savings.freeMoney = (savings.freeMoney * global.eur / global.usd).toFixed(3); }
+                else if (user.lastCurr == "RUB") { savings.freeMoney = (savings.freeMoney / global.usd).toFixed(3); }
+                else if (user.lastCurr == "USD") { savings.freeMoney = (savings.freeMoney * global.eur).toFixed(3); }
+                break;
 		}
 		user.lastCurr = user.checkedCurr;
 	};

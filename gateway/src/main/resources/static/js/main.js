@@ -135,6 +135,8 @@ function initSettingsPage() {
             break;
         case "USD": $("#rublesign").css({"background-position": "-354px 0"});
             break;
+        case "CNY": $("#rublesign").css({"background-position": "-172px 0"});
+            break;
     }
 
     $("#settings_hat").show();
@@ -168,7 +170,7 @@ function greetingPageAgain() {
         setTimeout(initSettingsPage, 200);
     });
     $("#righttitle, #lefttitle").empty();
-    $("#righttitle").append('<span class="bluetext">last seen: </span>' + user.lastSeen);
+    $("#righttitle").append('<span class="bluetext">最近登陆: </span>' + user.lastSeen);
     $("#lefttitle").append(escape(user.login) + '<span class="bluetext"> metrics</span>');
 }
 function showGreetingUnits() {
@@ -288,6 +290,8 @@ function checkCurrency(currency) {
         case "USD": currencyText="$";
             break;
         case "EUR": currencyText="&euro;";
+            break;
+        case "CNY": currencyText="&yen;";
             break;
     }
     return currencyText
@@ -726,6 +730,8 @@ $("#rublesign").on("click", function() {
             break;
         case "USD": user.checkedCurr = "RUB"; $("#rublesign").css({"background-position": "-150px 0"});
             break;
+        case "CNY": user.checkedCurr = "USD"; $("#rublesign").css({"background-position": "-172px 0"});
+            break;
     }
     changeCurrency();
     $("#savingsvalue").autoNumeric('set', Math.round (savings.freeMoney) );
@@ -858,7 +864,7 @@ function launchStatistic() {
 
     }
     else {
-        alert("Please, add at least one item for each column")
+        alert("请为每列添加至少一项")
     }
 
     jsonDataSave();
@@ -892,7 +898,7 @@ function jsonDataSave() {
                 }, 400);
             },
             error: function () {
-                alert("An error during data saving. Please, try again later");
+                alert("数据保存期间出错。 请稍后再试");
             }
         });
     }
@@ -906,6 +912,8 @@ function fadeStatistic() {
         case "EUR": $("#rublesign").css({"background-position": "-386px 0"});
             break;
         case "USD": $("#rublesign").css({"background-position": "-354px 0"});
+            break;
+        case "CNY": $("#rublesign").css({"background-position": "-172px 0"});
             break;
     }
     $("#savingsvalue").autoNumeric('set', savings.freeMoney);

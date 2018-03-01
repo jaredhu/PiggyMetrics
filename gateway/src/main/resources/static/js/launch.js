@@ -57,7 +57,8 @@ function getCurrentAccount() {
 	if (token) {
 		$.ajax({
 			url: 'accounts/current',
-			datatype: 'json',
+			dataType: 'json',
+            contentType: 'application/json',
 			type: 'get',
 			headers: {'Authorization': 'Bearer ' + token},
 			async: false,
